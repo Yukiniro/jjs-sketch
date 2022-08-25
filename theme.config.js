@@ -1,20 +1,17 @@
 export default {
-  projectLink: 'https://github.com/shuding/nextra', // GitHub link in the navbar
-  docsRepositoryBase: 'https://github.com/shuding/nextra/blob/master', // base URL for the docs repository
-  titleSuffix: ' - JJS',
+  projectLink: 'https://github.com/Yukiniro/create-nextra-app', // GitHub link in the navbar
+  docsRepositoryBase: 'https://github.com/Yukiniro/create-nextra-app/blob/master', // base URL for the docs repository
+  titleSuffix: ' - Yukiniro',
   nextLinks: true,
   prevLinks: true,
   search: true,
   customSearch: null, // customizable, you can use algolia for example
   darkMode: true,
   footer: true,
-  footerText: `MIT ${new Date().getFullYear()} © Shu Ding.`,
-  footerEditLink: `Edit this page on GitHub`,
+  footerText: `MIT ${new Date().getFullYear()} © Yukiniro.`,
+  footerEditLink: ``,
   logo: (
-    <>
-      <svg>...</svg>
-      <span>Next.js Static Site Generator</span>
-    </>
+    <span>Just Javascript [译]</span>
   ),
   head: (
     <>
