@@ -88,3 +88,80 @@ _"实施细节"_
 就像维吉尔引导但丁穿越地狱的九个圈子一样，Count von Count 将陪伴我们穿越 `JavaScript` 的 “天球”，遇见不同的值：Booleans、Numbers、Strings 以及其他。将其视为观光旅游。
 
 ![celestialspheres-v2.png](/image/celestialspheres-v2.png)
+
+### Undefined
+
+我们将和 `Undefined` 类型一起开始我们的旅途。Count von Count 会很高兴知道**这个类型唯一的值 -- `undefined`。**
+
+```javascript
+console.log(typeof(undefined)); // "undefined"
+```
+
+![undefined-revised.png](/image/undefined-revised.png)
+
+它叫做未定义（undefined）所以你可能会认为它是不存在的 -- 但是它确实是一个值，真实存在的。
+像一个黑洞，`undefined` 脾气暴躁，经常会带来麻烦。例如，从它这里读取一个属性将会破坏你的程序：
+
+```javascript
+let person = undefined;
+console.log(person.mood); // TypeError!
+```
+
+不过幸运的是，在整个 `JavaScript` 宇宙中仅有一个 `undefined`。你也许会想：它为什么会存在呢？
+在 `JavaScript` 中，它代表了 _无意_ 缺失值的概念。
+
+你可以以写成 `undefined` 的形式在你的代码中使用它 -- 就像是写 2 或者 “hello” 一样。
+然而， `undefined` _也_ 会经常自然发生。它出现在 JavaScript 不知道你想要什么值的情况下。
+例如，如果你忘记了定义一个变量，那它会被指定为 `undefined`。
+
+```javascript
+let bandersnatch;
+console.log(bandersnatch); // undefined
+```
+
+![undefined-example.png](/image/undefined-example.png)
+
+然后你就可以将其指定为其他的值，或者你想的话再次指定为 `undefined` 也可以。
+
+不要被它的名字所迷惑了。这很容易将 `undefined` 视为某种变量状态，例如，“这个变量尚未定义”。
+但是这是一种完全误导性的思考方式！实际上，如果你访问一个没有被定义的变量（或者在 `let` 生命之前），你将会得到一个错误：
+
+```javascript
+console.log(jabberwocky); // ReferenceError!
+let jabberwocky;
+```
+
+这与 `undefined` 没有关系。
+
+真实情况是， `undefined` 是一个普通的原始值，就像是 2 或者 “hello”。
+
+### Null
+
+![null-revised.png](/image/null-revised.png)
+
+你可以将 `null` 视为 `undefined` 的姐妹。它们的行为非常相似。
+例如：当你尝试访问其属性时会表现惊慌失措。
+
+```javascript
+let mimsy = null;
+console.log(mimsy.mood); // TypeError!
+```
+
+![null-example.png](/image/null-example.png)
+
+和 `undefined` 相似的是，**null 是这个类型的唯一的值。** 然而，null 也是一个骗子。
+由于 JavaScript 的一个 [bug](https://2ality.com/2013/10/typeof-null.html?ck_subscriber_id=745643025)，它伪装成了一个对象。
+
+```javascript
+console.log(typeof(null)); // "object" (a lie!)
+```
+
+你也许会认为这意味着 null 是一个对象。不要陷入这个陷阱！
+它是一个原始值，并且它的行为一点也不像一个对象。
+不幸的是，由于历史原因我们不得不一直忍受下去。
+
+在实践中，null 用于故意缺失值。为什么同时具有 null 和 undefined ？
+这可以帮助你区分编码错误（可能导致 `undefined`）和有效的数据缺失（可能表示为 `null`）。
+然而，这只是一个约定，JavaScript 并不强制这种用法。有些人会尽量避开它们两个。
+
+我不责怪它们。
