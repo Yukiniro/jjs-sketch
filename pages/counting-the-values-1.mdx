@@ -165,3 +165,183 @@ console.log(typeof(null)); // "object" (a lie!)
 然而，这只是一个约定，JavaScript 并不强制这种用法。有些人会尽量避开它们两个。
 
 我不责怪它们。
+
+### Booleans
+![boolean-revised.png](/image/boolean-revised.png)
+
+就像是白天和黑夜，**这里也只有两个 `boolean` 类型的值：`true` 和 `false`。**
+
+```javascript
+console.log(typeof(true)); // "boolean"
+console.log(typeof(false)); // "boolean"
+```
+
+我们可以可以对它们进行逻辑操作：
+
+```javascript
+let isSad = true;
+let isHappy = !isSad; // 取反
+let isFeeling = isSad || isHappy; // 至少有一个是 true ?
+let isConfusing = isSad && isHappy; // 都是 true ?
+```
+
+Count von Count 想要检查你的心智模型。打开一个[草图 APP](https://excalidraw.com/?ck_subscriber_id=745643025) 或者拿出一张纸，画出上面代码中变量、值和它们之间的线。
+
+_以下是剧透_
+_在你画完之前不要滚动下去_
+
+...
+...
+...
+...
+...
+...
+...
+...
+...
+...
+
+对照这张图检查你的答案：
+
+![boolean-example](/image/boolean-example.png)
+
+首先，验证 isHappy 指向 false，isFeeling 指向 true，isConfusing 指向 false。
+（如果你的答案不一样，那一定是某个地方出现了错误 -- 一步一步检查每一行）
+
+紧接着，验证草图上**只有一个真值和一个假值**。 Count von Count 坚持认为这很重要！
+不管布尔值在内存中如何存储，在我们的心智模型中就只有这两个。
+
+### Numbers
+
+![numbers-v2](/image/numbers-v2.png)
+
+到目前为止，我们准确计算了了 4 个值：null，undefined，true，和 false。
+
+等等，我们的心智模型将增加十八亿，四百三十七亿，七百三十六万亿，八千七十四亿，四亿五千四百万，八十二万，六百二十四及更多。
+
+当然，我的意思是数字：
+
+```javascript
+console.log(typeof(28)); // "number"
+console.log(typeof(3.14)); // "number"
+console.log(typeof(-140)); // "number"
+```
+
+首先，数字可能看起来不起眼。让我们仔细看看。
+
+#### 计算机数学
+
+JavaScript 中的数字的行为表现和常规数学的数字不一样。这是一个演示片段：
+
+```javascript
+console.log(0.1 + 0.2 === 0.3); // false
+console.log(0.1 + 0.2 === 0.30000000000000004); // true
+```
+
+这个看起来很令人惊讶！与流行的看法相反，这并不意味值 JavaScript 中的数字是被破坏的。
+这种行为在不同的编程语言中都很常见。它甚至还有一个名字：浮点数学。
+
+你看， JavaScript 没有实现我们在现实生活中使用的那种数学。浮点数是“计算机数学”。
+不用太担心这个名字或者它是如何工作的。很少有人能知道所有的细节，这才是管家吗。
+它在实践中运行得很好，大多数时候你不用考虑它。不过，我们还是快速看一下是什么让它与众不同。
+
+#### 颜色和数字
+
+你是否曾经使用扫描仪将物理照片或者文档转换为数字照片？这个类比可以帮助我们理解 JavaScript 数字。
+
+扫描仪通常最多可以分辨 1600 万种颜色。如果你用红色蜡笔画一张图片并扫描它，那么扫描出来的颜色应该是红色的 -- 但它会是我们的
+扫描仪从这 1600 万种颜色中挑选出来的最接近的后果色。因此，如果你有两种略有不同的红色蜡笔，扫描仪可能会误认为它们是一样的颜色。
+
+_我们可以说扫描仪将颜色是为具有有限的精度。_
+
+浮点数是类似的。在真正的数学中，有一组无限的数字。但是在浮点数学中，只有 18 千亿 个。
+所以，当我们在代码中写入数字或者使用它们进行计算时，JavaScript 会选择他所知道的最为接近的
+数字 -- 就像我们的扫描仪处理颜色一样。
+
+_换句话说，JavaScript 将数字是为有限的精度。_
+
+我们可以想象一个轴上所有的 JavaScript 数字。我们越接近 0，数字的精度越高，它们的位置也就越近。
+
+![number_axis](/image/number_axis.gif)
+
+当我们从 0 向任一方向移动时，我们开始失去精度。在某些时候，即使是两个最接近的 JavaScript 数字也比 1 相距更远。
+
+```javascript
+console.log(Number.MAX_SAFE_INTEGER);     // 9007199254740991
+console.log(Number.MAX_SAFE_INTEGER + 1); // 9007199254740992
+console.log(Number.MAX_SAFE_INTEGER + 2); // 9007199254740992
+console.log(Number.MAX_SAFE_INTEGER + 3); // 9007199254740994
+console.log(Number.MAX_SAFE_INTEGER + 4); // 9007199254740996
+console.log(Number.MAX_SAFE_INTEGER + 5); // 9007199254740996
+```
+
+幸运的是，任何在 `Number.MIN_SAFE_INTEGER` 和 `Number.MAX_SAFE_INTEGER` 之间的**整数**都是准确的。
+这就是为什么 `10 + 20 === 30`。
+
+但是当我们写 `0.1` 或者 `0.2` 时，我们不会获取准确的 `0.1` 或者 `0.2`。我们会获取在 JavaScript 中最接近的有效数字。
+它们几乎完全相同，但时可能存在细微差别。这些微小的差异会叠加，这就是为什么 `0.1 + 0.2` 和我们写的 `0.3` 不相等。
+
+如果这仍然令人困惑，请不要担心。你可以了解有关浮点数学的更多信息，但你已经比我开始编写这本指南时了解得更多了!
+除非你使用财务应用程序，否则你可能不需要担心这一点。
+
+#### 特殊数字
+
+值得注意的是，浮点数学中包含一些特殊数字。你可能偶尔遇到过 `NaN`、`Infinity`、`-Infinity` 和 `0`。
+它们的存在是因为有时候你可能执行了诸如 `1 / 0` 这样的操作，JavaScript 需要以某种形式表示其结果。
+浮点数学标准指定了它们的工作方式以及使用它们时会发生什么。
+
+以下是代码中可能出现的特殊数字：
+
+```javascript
+let scale = 0;
+let a = 1 / scale; // Infinity
+let b = 0 / scale; // NaN
+let c = -a; // -Infinity
+let d = 1 / c; // -0
+```
+
+在这些特殊数字中， NaN 特别有趣，它表示 “不是一个数字”，是 `0 / 0` 和其他一些无效数学的结果。
+
+你也许会对它被解释为一个数字感到困惑：
+
+```javascript
+console.log(typeof(NaN)); // "number"
+```
+
+但是，这里没有诡辩。从 JavaScript 的角度来看，NaN 是一个数值。他不是 null、undefined、string 或者其他类型。
+但在浮点数学中，该属于的名称是 “不是一个数字”。所以它是一个数值，只是恰好被称为 “不是一个数字”，以为他表示无效的结果。
+
+使用这些特殊数字编码并不常见。但是，它们可能因为编码错误而出现。所以知道它们的存在也是有必要的。
+
+## 继续
+
+这个模块分为两部分。我们已经到了第一部分的结尾。现在我们将稍作休息。让我们回顾一下到目前为止我们计算了多少个值！
+
+![primitives-pt1-v3](/image/primitives-pt1-v3.png)
+
+- **Undefined**: 只有一个值，`undefined`
+- **Null**: 只有一个值， `null`
+- **Booleans**: 两个值，`true` 和 `false`
+- **Numbers**: 每个浮点数都是一个值
+
+我们还了解到一些关于 JavaScript 数字的有趣事实：
+
+- **不是所有的数字都可以在 JavaScript 中完美表示的。** 它们的小数部分距离 `0` 越近精度越高，越远的话精度越低。
+我们可以说它的小数部分是 “浮动的”。
+- **从无效的数学运算（比如 `1 / 0` 或 `0 / 0`）中得到的数字是特殊的。** NaN 就是这样的一个数字。它们可能因为编码错误而出现。
+- **`typeof(NaN)` 是一个数字因为 NaN 是一个数字类型的值。** 之所以称为“非数字”，是因为它代表了“无效”数字的 _概念_。
+
+在第二部分，我们将继续我们的观光之旅。我们将研究 BigInts、strings、objects 和 Functions -- 并且尝试计算它们。
+
+## 测验
+
+这个模块也有测验供你练习！
+
+[Click here to solidify this mental model with a few short exercises.](https://eggheadio.typeform.com/to/C3Ajk4?email=yukiniro@hotmail.com&ck_subscriber_id=745643025)
+
+**不要跳过它们**
+
+尽管您可能熟悉不同类型的价值观，但这些练习将帮助您巩固我们正在构建的心智模型。 在我们进入更复杂的主题之前，我们需要这个基础。
+
+Cheers,
+Dan
