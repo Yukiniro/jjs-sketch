@@ -1,0 +1,95 @@
+# 04. 计算值（Part 2）
+
+废话不多说，让我们继续 `JavaScript` 宇宙的旅行吧！
+
+![celestialspheres-v2.png](image/celestialspheres-v2.png)
+
+在之前的模块中，我们已经查看了 `Undefined`，`Null`，`Booleans` 和 `Numbers`。
+我们现在要继续计算值 -- 从 `BitInts` 开始。
+
+## BigInts
+
+![bigints-v2.png](image/bigints-v2.png)
+
+`BigInts` 是最近才加入到 `JavaScript` 中的，所以你没有看到其大范围的使用。
+如果你使用的是旧的浏览器，它们将不会工作。常规数字不能精确的表示大整数，所以
+`BigInts` 填补了这个空白（字面意思）：
+
+```javascript
+let alot = 9007199254740991n; // Notice n at the end
+console.log(alot + 1n); // 9007199254740992n
+console.log(alot + 2n); // 9007199254740993n
+console.log(alot + 3n); // 9007199254740994n
+console.log(alot + 4n); // 9007199254740995n
+console.log(alot + 5n); // 9007199254740996n
+```
+
+四舍五入不是什么高兴的事儿！这个在需要精确度的财务计算方面十分友好。
+请记住，没有什么是免费的。_真正_ 大数据的操作会消耗时间和资源。
+
+在我们的宇宙中有多少种 `BigInts` 呢？规范说它们具有 _任意的精度_。
+这意味着 __在我们的 JavaScript 宇宙中存在着无限的 BigInts -- 它们中的每一个都对应着数学中的整数__。
+
+是的。。。
+
+如果这个听起来很奇怪，考虑一下你是否对数学中的无限整数很熟悉了。（如果不是的话，请稍等片刻）。
+从 “数学宇宙” 到 "JavaScript 宇宙" 的跨越并不大。
+
+_(从这里我们可以直接进入 [百事宇宙](https://www.goldennumber.net/wp-content/uploads/pepsi-arnell-021109.pdf?ck_subscriber_id=745643025))_
+
+当然，在实践中，我们不可能将所有的 `BigInts` 放在计算机内存中。如果我们这样尝试了，
+计算机会崩溃或者无响应。但是从概念上来说，Count von Count 会忙于计算 `BigInts` 且永不停歇。
+
+## Strings
+
+![strings-v2.png](image/strings-v2.png)
+
+在 `JavaScript` 中， 字符串（`strings`）表示文本。这里有三种方式书写字符串
+（单引号、双引号和反引号），但是结果是相同的：
+
+```javascript
+console.log(typeof("こんにちは")); // "string"
+console.log(typeof('こんにちは')); // "string"
+console.log(typeof(`こんにちは`)); // "string"
+```
+
+空字符串也是字符串：
+
+```javascript
+console.log(typeof('')); // "string"
+```
+
+### 字符串不是对象
+
+所有的字符串都有一些内置的属性。
+
+```javascript
+let cat = 'Cheshire';
+console.log(cat.length); // 8
+console.log(cat[0]); // "C"
+console.log(cat[1]); // "h"
+```
+
+这并不意味着字符串就是对象！字符串的属性是特殊的，并且它们的表现形式和对象的也不一样。
+例如，你不能定义 `cat[0]` 为任意值。字符串是原始类型，所有的原始类型都是不可变的。
+
+### 每个可以想象到的字符串的值
+
+__在我们的宇宙中，每个可以想象到的字符串都有一个清晰的值。__
+是的，这包括你祖母的娘家姓，你十年前化名发表的同人小说，以及尚未编写的黑客帝国 5 的剧本。
+
+当然，所有可能的字符串不能真正放在计算机的内存中。但是每个可能的字符串的 _想法_ 能够放在
+你的脑海中。我们的 JavaScript 宇宙是面向人类的模型，而不是面向计算机！
+
+那么问题来了。下面这段代码能 _创建_ 一个字符串吗？
+
+```javascript
+let answer = prompt('Enter your name');
+console.log(answer);
+```
+
+还是说它仅仅是 _召唤_ 了一个已经存在于我们宇宙中的字符串。
+
+这个问题的答案取决了我们是 “从内部” 还是 “从外部” 学习 JavaScript。
+
+
